@@ -32,19 +32,19 @@ type Log_Struct struct {
 	Log_Message string
 }
 
-func Write_Log(current_log Log_Struct) (err error) {
+func Write_Log(current_log Log_Struct, file_name string) (err error) {
 
-	if _, err := os.Stat("backend_logs/"); os.IsNotExist(err) {
+	if _, err := os.Stat(file_name + "_logs/"); os.IsNotExist(err) {
 
 		// Если директория не существует - создаём
-		err := os.Mkdir("backend_logs/", 0777)
+		err := os.Mkdir(file_name+"_logs/", 0777)
 		if err != nil {
 			log.Fatal(err)
 		}
 
 	}
 
-	file, err := os.OpenFile("./backend_logs/backend.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
+	file, err := os.OpenFile("./"+file_name+"_logs/"+file_name+".log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
