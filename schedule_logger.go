@@ -6,15 +6,15 @@ import (
 	"os"
 )
 
-type log_type byte
+type Log_Type byte
 
 const (
-	log_ok log_type = iota
+	log_ok Log_Type = iota
 	log_warning
 	log_err
 )
 
-func (l *log_type) to_string() (log_str string, err error) {
+func (l *Log_Type) To_String() (log_str string, err error) {
 	switch *l {
 	case log_ok:
 		return "OK", nil
@@ -27,12 +27,12 @@ func (l *log_type) to_string() (log_str string, err error) {
 	}
 }
 
-type log_struct struct {
-	log_type    log_type
+type Log_Struct struct {
+	log_type    Log_Type
 	log_message string
 }
 
-func Write_Log(current_log log_struct) (err error) {
+func Write_Log(current_log Log_Struct) (err error) {
 
 	if _, err := os.Stat("backend_logs/"); os.IsNotExist(err) {
 
@@ -52,7 +52,7 @@ func Write_Log(current_log log_struct) (err error) {
 
 	log.SetOutput(file)
 
-	l_type, err := current_log.log_type.to_string()
+	l_type, err := current_log.log_type.To_String()
 	if err != nil {
 		return err
 	}
