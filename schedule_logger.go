@@ -9,18 +9,18 @@ import (
 type Log_Type byte
 
 const (
-	log_ok Log_Type = iota
-	log_warning
-	log_err
+	Log_OK Log_Type = iota
+	Log_WARNING
+	Log_ERROR
 )
 
 func (l *Log_Type) To_String() (log_str string, err error) {
 	switch *l {
-	case log_ok:
+	case Log_OK:
 		return "OK", nil
-	case log_warning:
+	case Log_WARNING:
 		return "WARN", nil
-	case log_err:
+	case Log_ERROR:
 		return "ERROR", nil
 	default:
 		return "", errors.New("invalid value of log type")
@@ -28,8 +28,8 @@ func (l *Log_Type) To_String() (log_str string, err error) {
 }
 
 type Log_Struct struct {
-	log_type    Log_Type
-	log_message string
+	Log_Type    Log_Type
+	Log_Message string
 }
 
 func Write_Log(current_log Log_Struct) (err error) {
@@ -52,12 +52,12 @@ func Write_Log(current_log Log_Struct) (err error) {
 
 	log.SetOutput(file)
 
-	l_type, err := current_log.log_type.To_String()
+	l_type, err := current_log.Log_Type.To_String()
 	if err != nil {
 		return err
 	}
 
-	log.Println(l_type + " " + current_log.log_message)
+	log.Println(l_type + " " + current_log.Log_Message)
 
 	return nil
 }
