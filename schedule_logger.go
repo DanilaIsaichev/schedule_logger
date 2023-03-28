@@ -17,7 +17,7 @@ const (
 func (l *Log_Type) To_String() (log_str string, err error) {
 	switch *l {
 	case Log_OK:
-		return "OK", nil
+		return "TRACE", nil
 	case Log_WARNING:
 		return "WARN", nil
 	case Log_ERROR:
@@ -34,17 +34,17 @@ type Log_Struct struct {
 
 func Write_Log(current_log Log_Struct, file_name string) (err error) {
 
-	if _, err := os.Stat(file_name + "_logs/"); os.IsNotExist(err) {
+	if _, err := os.Stat("logs/"); os.IsNotExist(err) {
 
 		// Если директория не существует - создаём
-		err := os.Mkdir(file_name+"_logs/", 0777)
+		err := os.Mkdir("logs/", 0777)
 		if err != nil {
 			log.Fatal(err)
 		}
 
 	}
 
-	file, err := os.OpenFile("./"+file_name+"_logs/"+file_name+".log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
+	file, err := os.OpenFile("./logs/"+file_name+".log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
